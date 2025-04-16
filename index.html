@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthetic Data Generation 🌟</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background-color: rgba(30, 30, 30, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #9D4EDD;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .form-control {
+            background-color: #2D2D2D !important;
+            border: 1px solid #9D4EDD !important;
+            color: #ffffff !important;
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            background-color: #333333 !important;
+            border-color: #7B2CBF !important;
+            box-shadow: 0 0 0 0.2rem rgba(157, 78, 221, 0.25) !important;
+            transform: translateY(-2px);
+        }
+        .form-group label {
+            color: #9D4EDD;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #9D4EDD, #7B2CBF) !important;
+            border: none !important;
+            padding: 15px 30px !important;
+            font-size: 1.1rem !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
+            border-radius: 12px !important;
+            margin-top: 2rem !important;
+            transition: all 0.3s ease !important;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 25px rgba(157, 78, 221, 0.4) !important;
+            background: linear-gradient(45deg, #7B2CBF, #5A189A) !important;
+        }
+        /* Select2 Dark Theme Customization */
+        .select2-container--default .select2-selection--multiple {
+            background-color: #2D2D2D !important;
+            border: 1px solid #9D4EDD !important;
+            border-radius: 12px !important;
+            min-height: 50px !important;
+            padding: 8px !important;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background: linear-gradient(45deg, #9D4EDD, #7B2CBF) !important;
+            border: none !important;
+            color: #ffffff !important;
+            border-radius: 20px !important;
+            padding: 5px 12px !important;
+            margin: 4px !important;
+            font-size: 0.9rem !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+        }
+        .select2-dropdown {
+            background-color: #1E1E1E !important;
+            border: 1px solid #9D4EDD !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+            animation: dropdownFade 0.2s ease-out;
+        }
+        .select2-container--default .select2-results__option {
+            padding: 10px 15px;
+        }
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background: linear-gradient(45deg, #9D4EDD, #7B2CBF) !important;
+            color: white !important;
+        }
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            background-color: #2D2D2D !important;
+            border: 1px solid #9D4EDD !important;
+            color: #ffffff !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1E1E1E;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #9D4EDD, #7B2CBF);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #7B2CBF, #5A189A);
+        }
+        /* Animations */
+        @keyframes dropdownFade {
+            from { 
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .alert-warning {
+            background-color: rgba(157, 78, 221, 0.1);
+            border-color: #9D4EDD;
+            color: #9D4EDD;
+            border-radius: 12px;
+        }
+        /* Fix for the placeholder and dropdown styles */
+        .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+            background-color: #2D2D2D !important;
+            color: #ffffff !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
+            color: #999 !important;
+        }
+
+        /* Fix for the selection clear button (X) */
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: #ffffff !important;
+            margin-right: 5px !important;
+            border-right: none !important;
+            padding-right: 5px !important;
+            opacity: 0.7;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            background: none !important;
+            color: #ffffff !important;
+            opacity: 1;
+        }
+
+        /* Additional styling for better consistency */
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #7B2CBF !important;
+            box-shadow: 0 0 0 0.2rem rgba(157, 78, 221, 0.25) !important;
+        }
+        /* Basic dark theme styling */
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 2rem;
+            background-color: #1E1E1E;
+            border-radius: 10px;
+        }
+
+        /* Select2 custom styling */
+        .select2-container--default .select2-selection--multiple {
+            background-color: #2D2D2D !important;
+            border: 1px solid #BB86FC !important;
+            border-radius: 8px;
+            min-height: 45px;
+        }
+
+        .select2-container--default .select2-search--inline .select2-search__field {
+            color: white !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #BB86FC !important;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            color: white;
+        }
+
+        .select2-dropdown {
+            background-color: #2D2D2D;
+            border: 1px solid #BB86FC;
+        }
+
+        .select2-container--default .select2-results__option {
+            color: white;
+            padding: 8px 12px;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #BB86FC;
+        }
+
+        .form-group label {
+            color: #BB86FC;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Synthetic Healthcare Data Analysis 📊</h1>
+        <form method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="num_samples">Number of Samples:</label>
+                <input type="number" class="form-control" name="num_samples" min="100" max="10000" value="500" required>
+            </div>
+            <div class="form-group">
+                <label for="disease_select">Select Rare Diseases:</label>
+                <select class="form-control" name="disease_select" id="disease_select" multiple required>
+                    <option value="Cystic Fibrosis">Cystic Fibrosis 🫁</option>
+                    <option value="Huntington's Disease">Huntington's Disease 🧠</option>
+                    <option value="Sickle Cell Anemia">Sickle Cell Anemia 🩸</option>
+                    <option value="Duchenne Muscular Dystrophy">Duchenne Muscular Dystrophy 💪</option>
+                    <option value="Hemophilia">Hemophilia 🩹</option>
+                    <option value="Alport Syndrome">Alport Syndrome 🧬</option>
+                    <option value="Amyotrophic Lateral Sclerosis (ALS)">Amyotrophic Lateral Sclerosis (ALS) 🧠</option>
+                    <option value="Angelman Syndrome">Angelman Syndrome 👶</option>
+                    <option value="Ataxia-Telangiectasia">Ataxia-Telangiectasia 🧬</option>
+                    <option value="Bardet-Biedl Syndrome">Bardet-Biedl Syndrome 🧬</option>
+                    <option value="Batten Disease">Batten Disease 🧠</option>
+                    <option value="Churg-Strauss Syndrome">Churg-Strauss Syndrome 🩸</option>
+                    <option value="Cystinosis">Cystinosis 🧬</option>
+                    <option value="Ehlers-Danlos Syndrome">Ehlers-Danlos Syndrome 💪</option>
+                    <option value="Fabry Disease">Fabry Disease 🩸</option>
+                    <option value="Gaucher Disease">Gaucher Disease 🩸</option>
+                    <option value="Kawasaki Disease">Kawasaki Disease ❤️</option>
+                    <option value="Marfan Syndrome">Marfan Syndrome 💪</option>
+                    <option value="Menkes Disease">Menkes Disease 🧬</option>
+                    <option value="Neimann-Pick Disease">Neimann-Pick Disease 🧬</option>
+                    <option value="Osteogenesis Imperfecta">Osteogenesis Imperfecta 💔</option>
+                    <option value="Phenylketonuria (PKU)">Phenylketonuria (PKU) 🧬</option>
+                    <option value="Prader-Willi Syndrome">Prader-Willi Syndrome 👶</option>
+                    <option value="Rett Syndrome">Rett Syndrome 👧</option>
+                    <option value="Wilson's Disease">Wilson's Disease 🧬</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="genetic_variants">Select Genetic Variants:</label>
+                <select class="form-control" name="genetic_variants" id="genetic_variants" multiple required>
+                    <option value="BRCA1">BRCA1</option>
+                    <option value="BRCA2">BRCA2</option>
+                    <option value="TP53">TP53</option>
+                    <option value="EGFR">EGFR</option>
+                    <option value="KRAS">KRAS</option>
+                    <option value="ATM">ATM</option>
+                    <option value="MLH1">MLH1</option>
+                    <option value="MSH2">MSH2</option>
+                    <option value="MSH6">MSH6</option>
+                    <option value="PMS2">PMS2</option>
+                    <option value="PALB2">PALB2</option>
+                    <option value="CHEK2">CHEK2</option>
+                    <option value="NBN">NBN</option>
+                    <option value="RAD51C">RAD51C</option>
+                    <option value="RAD51D">RAD51D</option>
+                    <option value="BRIP1">BRIP1</option>
+                    <option value="PTEN">PTEN</option>
+                    <option value="CDH1">CDH1</option>
+                    <option value="STK11">STK11</option>
+                    <option value="NF1">NF1</option>
+                    <option value="TP53">TP53</option>
+                    <option value="BAP1">BAP1</option>
+                    <option value="GREM1">GREM1</option>
+                    <option value="TSC1">TSC1</option>
+                    <option value="TSC2">TSC2</option>
+                    <option value="VHL">VHL</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate Data</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning mt-3">
+                    <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#disease_select').select2({
+                placeholder: "Select Rare Diseases",
+                allowClear: true
+            });
+            $('#genetic_variants').select2({
+                placeholder: "Select Genetic Variants",
+                allowClear: true
+            });
+        });
+    </script>
+</body>
+</html>

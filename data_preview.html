@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis Dashboard 📊</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        .dashboard-container {
+            padding: 2rem;
+            background-color: #1E1E1E;
+        }
+        h2 {
+            color: #BB86FC;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+        }
+        .card {
+            background-color: #2D2D2D;
+            border: 1px solid rgba(187, 134, 252, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(187, 134, 252, 0.2);
+        }
+        .card-header {
+            background-color: rgba(187, 134, 252, 0.1);
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+            color: #03DAC6;
+            font-weight: 600;
+        }
+        .table-dark {
+            background-color: #2D2D2D;
+            color: #ffffff;
+        }
+        .table-dark thead th {
+            background-color: rgba(3, 218, 198, 0.1);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #03DAC6;
+        }
+        .btn-primary {
+            background-color: #BB86FC;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #03DAC6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(3, 218, 198, 0.3);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1E1E1E;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #BB86FC;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #03DAC6;
+        }
+        /* Graph container enhancements */
+        .graph-container {
+            position: relative;
+            padding: 1rem;
+        }
+        .graph-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            background: linear-gradient(45deg, rgba(187, 134, 252, 0.1), rgba(3, 218, 198, 0.1));
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Synthetic Healthcare Data Analysis 📊</h2>
+        
+        <!-- Visualization Grid -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">Age Distribution by Disease</div>
+                    <div class="graph-container">
+                        {{ graphs.age_disease | safe }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">Treatment Response Analysis</div>
+                    <div class="graph-container">
+                        {{ graphs.treatment | safe }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">Mortality Rate Distribution</div>
+                    <div class="graph-container">
+                        {{ graphs.death_rate | safe }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">Family History Patterns</div>
+                    <div class="graph-container">
+                        {{ graphs.family_history | safe }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header">Disease Features Analysis</div>
+                    <div class="graph-container">
+                        {{ graphs.features | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Preview Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Generated Dataset Preview
+                    </div>
+                    <div class="card-body table-responsive">
+                        {{ synthetic_data_html | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Button -->
+        <div class="row mt-4 mb-5">
+            <div class="col-12 text-center">
+                <a href="{{ url_for('download_synthetic_data', filename='synthetic_data.csv') }}" 
+                   class="btn btn-primary">
+                    Download Complete Dataset 📥
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
